@@ -1,2 +1,2 @@
 # tecnomultimedia 
-Hola, soy Leo Messi. Te voy a contar una breve hsitoria sobre mi carrera futbolistica. En el Barcelona y Argentina. Para que veas los goles mas importants que hice, los titulos que mas disfrute en equipo e individualmente. Acompañame en esta aventura.
+Hola, soy Leo Messi.  Veni y senti la emocion como la siento yo al jugar partidos con equipos grandes, como son el Real Madrid y Brasil. Juga conmigo y  veremos que pasa.
