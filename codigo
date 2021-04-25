@@ -1,1 +1,319 @@
 
+class FondoDeLineas {
+  float x, y;
+  float dir, vel;
+  float t;
+
+  FondoDeLineas() {
+    x=0;
+    y= 200;
+    dir= x;
+    vel=4;
+    t=350;
+  }
+
+  void dibujarFondoDeLineas() {
+    //float r=map(x, 0, width, 255,100);
+    //float g=map(x, 0, width, 255,13);
+    //float b=map(x, 0, width, 255,252);
+    noStroke();
+    fill(250, 226, 3);
+    rect(x, y, t-343, t-125);
+  }
+
+
+  void movimientoDeFondoDeLineas() {
+    float dx=vel/2*cos(dir);
+    //cartesianas
+    x=x+dx;
+  }
+}
+
+class GestorDeInteraccion { //devuelve los valores que necesito
+
+  Dir_y_Vel mouse;
+ 
+  boolean SeMovia;
+  boolean haciaLaIzquierda, haciaLaDerecha;
+  GestorDeInteraccion() { //devuelve el gesto desde la izq hacia la derecha,ocurre en un frame en paticular y no constantemente
+    mouse= new Dir_y_Vel();
+  }
+
+  void actualizar() {
+
+    mouse.calcularTodo(mouseX, mouseY);// para saber lo q pasa con el mouse
+
+    //Que pasa con el mouse en este frame
+
+    boolean seMueveEnEsteFrame= false;
+    float sensibilidad=35;
+    if (mouse.velocidad()>sensibilidad&& mouse.velocidad()<150) { //responde al mouse con determinada vel y sensibilidad
+      seMueveEnEsteFrame=true; //si se mueve en esa sensibilidad es true
+    }
+    haciaLaIzquierda =false; //los valores tienen q volver a ser falsos
+    haciaLaDerecha=false;
+    if (seMueveEnEsteFrame&& ! SeMovia) {
+
+      haciaLaIzquierda=mouse.direccionX()< sensibilidad? true:false;//si la dir del mouse en x es mayor a la sensibilidad va a ser true,en caso contrario va a ser false
+      haciaLaDerecha=mouse.direccionX()> sensibilidad? true:false;
+    }
+    SeMovia=seMueveEnEsteFrame; //dejo listo todo para el sig frame
+  }
+  
+}
+
+class GestorDeVelocidadDelMouse{
+    Dir_y_Vel mouse;
+ boolean movimientoGrande;
+
+  float tiempoGrande;
+
+  GestorDeVelocidadDelMouse() {
+    mouse = new Dir_y_Vel();
+  }
+
+  void VelocidadDelMouse() {
+    mouse.calcularTodo(mouseX, mouseY);
+    movimientoGrande = false;
+   tiempoGrande--;
+  
+ tiempoGrande = constrain(tiempoGrande, 0, 90);
+ 
+  
+    if (mouse.velocidad()>10) {
+      float umbral = 40;
+      if (mouse.velocidad()>umbral) {
+       tiempoGrande+=10;
+       }
+      }
+    
+    if (tiempoGrande>55) {
+      movimientoGrande = true;
+    } 
+  
+    
+  }
+}
+
+ArrayList<Caminante> cs; //declaración
+Caminante2  c[];
+
+Caminante3  d[];
+GestorDeInteraccion g;
+GestorDeVelocidadDelMouse v;
+FondoDeLineas f;
+int cant=12;
+int cant2=4;
+
+
+void setup() { //construcción
+  size( 800, 600);
+ background(#E3E8FA);
+  g=new GestorDeInteraccion();
+  v=new GestorDeVelocidadDelMouse();
+  cs=new ArrayList<Caminante>(); //lineas horizontales
+
+  c=new Caminante2[cant];
+  d=new Caminante3[cant2];
+  for (int i=0; i<cant; i++) {
+    f=new FondoDeLineas();
+    c[i]=new Caminante2();//lineas izquierda
+  }
+  for (int i=0; i<cant2; i++) {
+    d[i]=new Caminante3();//lineas derecha
+  }
+}
+
+void draw() {
+   
+  for (int i=0; i<cant2; i++) { //lineas verticales
+    d[i].movimientoCamVertical();
+    d[i].dibujarLineasVerticales();
+  }
+    v.VelocidadDelMouse();
+  if (v.movimientoGrande) {
+     f.movimientoDeFondoDeLineas();
+  f.dibujarFondoDeLineas();
+  for (int i=0; i<cant; i++) { //lineas izquierda
+    c[i].movimientoCam2();
+    c[i].dibujarLineasDeLaIzq();
+  }
+  
+  }
+ 
+ /* g.actualizar();
+if (g.haciaLaIzquierda) {
+    println("haciaLaIzquierda");
+    cs.add(new Caminante(width,random(height), -1, 0));
+  }
+
+  if (g.haciaLaDerecha) {
+    println("haciaLaDerecha");
+    cs.add(new Caminante(0,random(height), 1, 0));
+  }
+
+  for (Caminante c : cs) {
+   // c.dibujarLineasDeIzquierda(); //lineas horizontales
+    c.dibujarLineasDeLaDerecha();
+  }
+  */
+}
+
+class Caminante2 {
+
+  float x;
+  float y;
+  float dir, vel;
+  float t;
+
+  Caminante2() {
+    x=0;
+    y=200;
+    dir= x;
+    vel=4;
+    t=6;
+  }
+  void dibujarLineasDeLaIzq(){
+for (int i=0; i<cant; i++) { 
+    noStroke();
+    fill(0);
+    rect(x,y+i*20,t, t);//para separar las lineas
+}
+  }
+  void movimientoCam2() {
+    float dx=vel/2*cos(dir);
+    //cartesianas
+    x=x+dx;
+  }
+}
+
+class Caminante {
+  float x;
+  float y;
+  float dir, vel;
+  float t;
+
+  Caminante() {
+    x=width;
+    y= 20;
+    dir= x;
+    vel=4;
+    t=6;
+  }
+  void dibujarLineasDeLaDerecha() {
+for (int i=0; i<cant; i++) { 
+    noStroke();
+    fill(180);
+    rect(x, y+i*15, t, t);
+}
+  }
+  void movimientoCam3() {
+    float dx=vel/2*cos(dir);
+    //cartesianas
+    x=x+dx;
+  }
+}
+
+class Caminante3 {
+
+  float x;
+  float y;
+  float dir, vel;
+  float t;
+
+  Caminante3() {
+    x=0;
+    y=20;
+    dir= y;
+    vel=4;
+    t=6;
+  }
+  void dibujarLineasVerticales() {
+
+    noStroke();
+    fill(180);
+    rect(x, y, t*3, t);
+    rect(width-15, y, t*3, t);
+  }
+  void movimientoCamVertical() {
+    float dy=vel/3*sin(dir);
+    //cartesianas
+    y=y+dy;
+  }
+}
+
+class Dir_y_Vel {
+  float posX;
+  float posY;
+  float prevPosX;
+  float prevPosY;
+  float miDireccionX;
+  float miDireccionY;
+  float vel;
+  float miDireccionPolar;
+
+  Dir_y_Vel () {
+    this.posX=0;
+    this.posY=0;
+  }
+
+  void calcularTodo (float mi_X, float mi_Y) {
+    prevPosX=posX;
+    prevPosY=posY;
+    posX=mi_X;
+    posY=mi_Y;
+
+    miDireccionX = posX-prevPosX;
+    miDireccionY = posY-prevPosY;
+    miDireccionPolar = degrees(atan2( posY-prevPosY, posX-prevPosX ));
+
+    vel = dist (posX, posY, prevPosX, prevPosY);
+  }
+
+
+//////* ESTOS SON LOS METODOS QUE DEVUELVEN ALGO *///////
+
+  float velocidad() {
+    return vel;
+  }
+
+  float direccionX () {
+    return miDireccionX;
+  }
+
+  float direccionY () {
+    return miDireccionY;
+  }
+
+
+  float direccionPolar () {
+    return miDireccionPolar;
+  }
+  
+  
+//////* ESTO ES PARA DEBBUGGEAR LO QUE SE ESTA VIENDO *///////
+
+  void mostrarData() { 
+    textSize(24);
+    text ("Velocidad: "+vel, 50, 50);
+    text ("Direccion X: "+miDireccionX, 50, 75);
+    text ("Direccion Y: "+miDireccionY, 50, 100);
+    text ("Direccion Polar: "+miDireccionPolar, 50, 125);
+
+    pushMatrix();
+    pushStyle();
+    noFill();
+    stroke(255);
+    strokeWeight(3);
+    translate (width/2, height/2);
+
+    ellipse (0, 0, 100, 100);
+    rotate (radians(miDireccionPolar));
+    line (0, 0, vel*2, 0);
+
+    popMatrix();
+    popStyle();
+  }  
+
+  ///////////// FIN DE LA CLASE  ///////
+}
