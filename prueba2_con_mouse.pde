@@ -44,20 +44,19 @@ void draw() {
   
   }
  
- /* g.actualizar();
+ g.actualizar();
 if (g.haciaLaIzquierda) {
     println("haciaLaIzquierda");
-    cs.add(new Caminante(width,random(height), -1, 0));
+    cs.add(new Caminante(width,random(500), -1, 0));
   }
 
   if (g.haciaLaDerecha) {
     println("haciaLaDerecha");
-    cs.add(new Caminante(0,random(height), 1, 0));
+    cs.add(new Caminante(0,random(100), 1, 0));
   }
 
   for (Caminante c : cs) {
-   // c.dibujarLineasDeIzquierda(); //lineas horizontales
-    c.dibujarLineasDeLaDerecha();
+    c.dibujarLineas();
   }
-  */
+
 }
