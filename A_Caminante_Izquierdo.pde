@@ -17,6 +17,7 @@ for (int i=0; i<cant; i++) {
     noStroke();
     fill(0);
     rect(x,y+i*20,t, t);//para separar las lineas
+    rect(x,y-300+i*20,t, t);
 }
   }
   void movimientoCam2() {

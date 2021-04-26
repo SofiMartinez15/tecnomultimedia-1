@@ -16,9 +16,9 @@ dy=dy_;;    t=6;
      
     x+=dx;
   
- for( int i=0; i<cant; i++) { 
+ for( int i=0; i<4; i++) { 
     noStroke();
-    fill(200);
+    fill(220);
     rect(x, y+i*15, t, t);
 
  

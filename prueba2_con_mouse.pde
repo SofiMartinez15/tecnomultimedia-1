@@ -34,7 +34,7 @@ void draw() {
     d[i].dibujarLineasVerticales();
   }
     v.VelocidadDelMouse();
-  if (v.movimientoGrande) {
+  if (v.movimientoPeque) {
      f.movimientoDeFondoDeLineas();
   f.dibujarFondoDeLineas();
   for (int i=0; i<cant; i++) { //lineas izquierda
@@ -47,14 +47,14 @@ void draw() {
  g.actualizar();
 if (g.haciaLaIzquierda) {
     println("haciaLaIzquierda");
-    cs.add(new Caminante(width,random(500), -1, 0));
+    cs.add(new Caminante(width,random(450,600), -1, 0));
   }
 
-  if (g.haciaLaDerecha) {
+ /* if (g.haciaLaDerecha) {
     println("haciaLaDerecha");
     cs.add(new Caminante(0,random(100), 1, 0));
   }
-
+*/
   for (Caminante c : cs) {
     c.dibujarLineas();
   }

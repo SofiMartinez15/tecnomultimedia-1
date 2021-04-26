@@ -1,8 +1,8 @@
 class GestorDeVelocidadDelMouse{
     Dir_y_Vel mouse;
- boolean movimientoGrande;
+ boolean movimientoPeque;
 
-  float tiempoGrande;
+  float tiempoPeque;
 
   GestorDeVelocidadDelMouse() {
     mouse = new Dir_y_Vel();
@@ -10,21 +10,21 @@ class GestorDeVelocidadDelMouse{
 
   void VelocidadDelMouse() {
     mouse.calcularTodo(mouseX, mouseY);
-    movimientoGrande = false;
-   tiempoGrande--;
+    movimientoPeque = false;
+   tiempoPeque--;
   
- tiempoGrande = constrain(tiempoGrande, 0, 90);
+ tiempoPeque = constrain(tiempoPeque, 0, 90);
  
   
     if (mouse.velocidad()>10) {
-      float umbral = 40;
+      float umbral = 20;
       if (mouse.velocidad()>umbral) {
-       tiempoGrande+=10;
+       tiempoPeque+=10;
        }
       }
     
-    if (tiempoGrande>55) {
-      movimientoGrande = true;
+    if (tiempoPeque>55) {
+      movimientoPeque = true;
     } 
   
     
